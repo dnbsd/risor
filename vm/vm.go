@@ -5,7 +5,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"path/filepath"
+	"path"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -518,12 +518,12 @@ func (vm *VirtualMachine) eval(ctx context.Context) error {
 			}
 			for _, name := range names {
 				// check if the name matches a module
-				module, err := vm.importModule(ctx, filepath.Join(filepath.Join(from...), name))
+				module, err := vm.importModule(ctx, path.Join(path.Join(from...), name))
 				if err == nil {
 					vm.push(module)
 				} else {
 					// otherwise, the name is a symbol inside a module
-					module, err := vm.importModule(ctx, filepath.Join(from...))
+					module, err := vm.importModule(ctx, path.Join(from...))
 					if err != nil {
 						return err
 					}
